@@ -1,0 +1,73 @@
+body {
+    background-color: #303030;
+    color: #ffffff;
+    font-family: Verdana;
+}
+#tytul
+{
+    text-align: center;
+    font-size: 36px;
+    padding: 50px;
+    background-color: #00FFCC;
+    color: black;
+}
+a{
+    text-decoration: none;
+    color: #919191;
+    font-weight: bold;
+
+}
+#wiadomosci
+{
+    float: left;
+    padding: 50px;
+    padding-left: 50px;
+    font-size: 20px;
+}
+#logowanie
+{
+    padding: 50px;
+    padding-left: 500px;
+}
+
+.tyt
+{
+    padding: 50px;
+    font-size: 24px;
+    text-align: center;
+    padding-bottom: 0px;
+}
+.tytul
+{
+    padding: 50px;
+    font-size: 20px;
+    float: left;
+}
+#witaj
+{
+    padding: 20px;
+    float: right;
+}
+#tabela
+{
+    padding: 50px;
+    padding-top: 0px;
+}
+table
+{
+    border-spacing: 5mm 2mm;
+}
+#err
+{
+    color: red;
+}
+#info
+{
+    padding: 50px;
+}
+
+.info
+{
+    font-size: 16px;
+        color:green;
+}
