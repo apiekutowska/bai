@@ -2,6 +2,12 @@
     session_start();
     require "connection.php"; 
     connection(); 
+if(isset($_SESSION['login']))
+  {
+        echo '<div id="info"><span id="err">Błąd. </span>';
+        echo '<a href="index.php">Strona główna</a></div>';
+        exit();
+  }
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -27,7 +33,9 @@
                         //$_GET['login'] = $login;
                         $_SESSION['login'] = $login;
                         $_SESSION['log'] = TRUE;
-                        header('Location:index.php');
+                        //header('Location:index.php');
+                        echo '<div id="info"><span class="info">Pomyślnie zalogowano. </span>';
+                        echo '<a href="index.php">Strona główna</a></div>';
                       }
                       else 
                       {

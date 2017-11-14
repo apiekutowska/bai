@@ -43,8 +43,21 @@
                     echo "<td>".$r['text']."</td>"; 
                     if(isset($_SESSION['login']))
                     {
+                        $login=$_SESSION['login'];
+                        $idd=$r['id'];
+                        $user=$r['id_user'];
+                        $text2=$r['text'];
+                        $idus2= mysql_fetch_row(mysql_query("select id FROM users WHERE login='$login'")) or die('<div id="err">Błąd zapytania</div>'); 
+                        $idus=$idus2[0];
+                        $sql=mysql_query("select id_user FROM permissions WHERE id_message='$idd' and id_user='$idus'");
+                        $sql3=mysql_query("select * FROM messages WHERE id='$idd' and id_user='$idus'");
+                         $w1=mysql_num_rows($sql3);
+
                         echo "<td> <a href=\"wiadomosci.php?&akcja=usun&id={$r['id']}&idus={$r['id_user']}\">USUŃ</a></td>"; 
-                        echo "<td> <a href=\"wiadomosci.php?&akcja=edytuj&id={$r['id']}&idus={$r['id_user']}&text={$r['text']}\">EDYTUJ</a>  </td>";    
+                        
+		
+                       // echo "<td> <a href=\"wiadomosci.php?&akcja=edytuj&id={}&idus={}&text={}\">EDYTUJ</a>  </td>";    
+                        echo "<td> <a href=\"edycja.php?akcja&text={$text2}&id={$idd}&idus={$user}\">EDYTUJ</a>  </td>";   
                     }
                     echo "</tr>"; 
                 } 
@@ -68,16 +81,18 @@
 	                   $login2 = $_SESSION['login'];
                        $data=date("Y-m-d");
 	                   $idu=mysql_fetch_row(mysql_query("SELECT id FROM users WHERE login='$login2'"))or die('<div id="err">Błąd zapytania</div>');
-                       $ipm=mysql_fetch_row(mysql_query("SELECT id+1 FROM messages WHERE id=(select max(id) from messages)"));
 	                   $tekst = filtruj($_GET['tekst']);
+                
 	
 	                   if (mysql_num_rows(mysql_query("SELECT id FROM users WHERE login = '$login2';")) == 1)
 	                   {
 			                 $ins=@mysql_query("INSERT INTO messages set id=NULL, id_user='$idu[0]', text='$tekst', data_dod='$data';") or die(mysql_error());
+                             $ipm= mysql_fetch_row(mysql_query("SELECT id FROM messages order by id desc "));
                              $inam=@mysql_query("INSERT INTO permissions set id=NULL, id_user='$idu[0]', id_message='$ipm[0]';") or die(mysql_error());
                            
-				             if($ins) echo '<meta http-equiv="refresh" content="0; URL=wiadomosci.php">';
-                             else echo "<br/><br/><div id='err'>Błąd nie udało się dodać wiadomości</div>"; 
+				             if(!$ins) //echo '<meta http-equiv="refresh" content="0; URL=wiadomosci.php">';
+                             //else 
+                                 echo "<br/><br/><div id='err'>Błąd nie udało się dodać wiadomości</div>"; 
 		               }
                 }
                 
@@ -95,12 +110,12 @@
                     {
                         $wynik2 = mysql_query("delete FROM messages WHERE id='$idd'") or die('<div id="err">Błąd zapytania</div>'); 
                         $wynik3 = mysql_query("delete FROM permissions WHERE id_message='$idd'") or die('<div id="err">Błąd zapytania</div>');
-		  		        echo '<meta http-equiv="refresh" content="0; URL=wiadomosci.php?login='.$login.'">';
+		  		       // echo '<meta http-equiv="refresh" content="0; URL=wiadomosci.php?login='.$login.'">';
 		            }
 		            else echo '<br/><br/><span id="err">Brak uprawnień!</span>';
                 } 
                 
-                if($akcja=="edytuj")
+                /*if($akcja=="edytuj")
                 {
                     $login=$_SESSION['login'];
                     $idd=$_GET['id'];
@@ -120,7 +135,7 @@
 		
                     if($w==1) echo '<meta http-equiv="refresh" content="0; URL=edycja.php?akcja&text='.$text2.'&id='.$idd.'&idus='.$user.'&up='.$up.'">';
                     else echo'<div id="err">Brak uprawnień</div>';
-		        }	  
+		        }	*/  
             } 
         ?>
         </div>

@@ -4,7 +4,8 @@
   connection();
   if(isset($_SESSION['login']))
   {
-        header('Location:index.php');
+        echo '<div id="info"><span id="err">Błąd. </span>';
+        echo '<a href="index.php">Strona główna</a></div>';
         exit();
   }
 ?>
